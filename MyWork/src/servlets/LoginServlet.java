@@ -51,5 +51,6 @@ public class LoginServlet extends HttpServlet {
     public void init() throws ServletException {
         helper = new Helper();
         loginService = new LoginService();
+        //TODO(filter and cookies)
     }
 }
