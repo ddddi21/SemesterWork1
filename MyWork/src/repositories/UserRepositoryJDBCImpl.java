@@ -30,8 +30,12 @@ public class UserRepositoryJDBCImpl implements UserRepository {
 
 
 
-    public UserRepositoryJDBCImpl(){
-        connection = ConnectionProvider.getConnection();
+    public UserRepositoryJDBCImpl()  {
+        try {
+            connection = ConnectionProvider.getConnection();
+        } catch (ClassNotFoundException e) {
+            throw  new IllegalStateException(e);
+        }
     }
 
     @Override

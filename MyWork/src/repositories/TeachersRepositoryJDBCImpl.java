@@ -13,10 +13,17 @@ import java.util.Optional;
 public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     private Connection connection;
 
+    //language=SQL
+    private static final String SQL_INSERT_BY_USER_ID = "INSERT into teacher(user_id, subjects_id) WHERE values (?,?)";
+
     //TODO(do this later)
 
     public TeachersRepositoryJDBCImpl(Connection connection) {
-        this.connection = ConnectionProvider.getConnection();
+        try {
+            this.connection = ConnectionProvider.getConnection();
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override
@@ -48,6 +55,13 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     public void deleteHomework(Integer id) {
 
     }
+
+    @Override
+    public void addTeacherByUserId(Long id) {
+
+    }
+
+
 
     @Override
     public List<Teacher> findAll() {

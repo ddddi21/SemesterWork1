@@ -16,13 +16,13 @@ public class User {
 
     }
 
-    public User(Long id, String first_name, String lastName, Integer age, String password, String email) {
-        this.id = id;
+    public User(String first_name, String lastName, Integer age, String email, String password,String role) {
         this.firstName = first_name;
         this.lastName = lastName;
         this.age = age;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     public User(String email, String password) {

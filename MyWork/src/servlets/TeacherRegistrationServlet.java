@@ -74,8 +74,9 @@ public class TeacherRegistrationServlet extends HttpServlet {
         helper = new Helper();
         try {
             Class.forName("org.postgresql.Driver");
+            this.connection = ConnectionProvider.getConnection();
         } catch (ClassNotFoundException e) {
             throw  new IllegalStateException(e);
         }
-        this.connection = ConnectionProvider.getConnection();    }
+           }
 }
