@@ -18,6 +18,10 @@ public class UserService {
         return userRepositoryJDBC;
     }
 
+    public boolean isUserExist(User user){
+        return userRepositoryJDBC.isExist(user.getEmail(),user.getPassword());
+    }
+
     public boolean isUserAdd(User user){
         userRepositoryJDBC.save(user);
         return true;

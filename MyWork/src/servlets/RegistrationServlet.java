@@ -62,14 +62,15 @@ public class RegistrationServlet extends HttpServlet {
 
        userService.save(new User(firstName,lastName,age,email,password,role));
 
+       HttpSession session = req.getSession();
+       session.setAttribute("email", email);
+
         Cookie cookie_email = new Cookie("email", email);
         cookie_email.setMaxAge(-1);
         resp.addCookie(cookie_email);
 
         if(role.equals("teacher")){
             resp.sendRedirect("/teacherRegistration");
-//            List subjects = Collections.singletonList(req.getParameter("select_subject"));
-//            TODO(перетащить в другой серлвет)
         } else{
             if(role.equals("student")){
                 resp.sendRedirect("/studentRegistration");

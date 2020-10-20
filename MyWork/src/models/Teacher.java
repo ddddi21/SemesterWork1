@@ -4,13 +4,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class Teacher extends User {
-//    private Long id;
+    private Long teacher_id;
+    //    private Long id;
 //    private String firstName;
 //    private String lastName;
 //    private Integer age;
 //    private String school;
     private List <Group> groups;
-    private List<String> subject;
+    private String subject;
+    private Long user_id;
+
 
     public Teacher(String email, String password) {
         super(email, password);
@@ -21,23 +24,78 @@ public class Teacher extends User {
         super(username, password, email);
     }
 
-    public Teacher(List<Group> groups, List<String> subject) {
+    public Teacher(List<Group> groups, String subject) {
         this.groups = groups;
         this.subject = subject;
     }
 
 
-    public Teacher(String email, String password, List<Group> groups, List<String> subject) {
+    public Teacher(String email, String password, List<Group> groups, String subject) {
         super(email, password);
         this.groups = groups;
         this.subject = subject;
     }
 
-    public Teacher(String username, String password, String email, List<Group> groups, List<String> subject) {
+    public Teacher(String username, String password, String email, List<Group> groups, String subject) {
         super(username, password, email);
         this.groups = groups;
         this.subject = subject;
     }
+
+    public Teacher(List<Group> groups, String subject, Long user_id) {
+        this.groups = groups;
+        this.subject = subject;
+        this.user_id = user_id;
+    }
+
+    public Teacher(String first_name, String lastName, Integer age, String email, String password, String role, List<Group> groups,String subject, Long user_id) {
+        super(first_name, lastName, age, email, password, role);
+        this.groups = groups;
+        this.subject = subject;
+        this.user_id = user_id;
+    }
+
+    public Teacher(String email, String password, List<Group> groups,String subject, Long user_id) {
+        super(email, password);
+        this.groups = groups;
+        this.subject = subject;
+        this.user_id = user_id;
+    }
+
+    public Teacher(String username, String password, String email, List<Group> groups, String subject, Long user_id) {
+        super(username, password, email);
+        this.groups = groups;
+        this.subject = subject;
+        this.user_id = user_id;
+    }
+
+    public Teacher(Long id, String firstName, String lastName, String role, Integer age, String email, String password, List<Group> groups, String subject, Long user_id) {
+        super(id, firstName, lastName, role, age, email, password);
+        this.groups = groups;
+        this.subject = subject;
+        this.user_id = user_id;
+    }
+
+    public Teacher(Long teacher_id, Long user_id, String subject) {
+        this.teacher_id = teacher_id;
+        this.user_id = user_id;
+        this.subject = subject;
+    }
+
+    public Teacher(Long id, String subjects) {
+        this.user_id = id;
+        this.subject = subjects;
+    }
+
+    public Long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
+    }
+
+
 
     public List<Group> getGroups() {
         return groups;
@@ -47,11 +105,11 @@ public class Teacher extends User {
         this.groups = groups;
     }
 
-    public List<String> getSubject() {
+    public String getSubject() {
         return subject;
     }
 
-    public void setSubject(List<String> subject) {
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 

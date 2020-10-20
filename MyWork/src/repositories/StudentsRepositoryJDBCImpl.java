@@ -1,41 +1,18 @@
 package repositories;
 
 import Singletones.ConnectionProvider;
-import models.Group;
 import models.Homework;
 import models.Student;
-import models.Teacher;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class TeachersRepositoryJDBCImpl implements TeachersRepository {
+public class StudentsRepositoryJDBCImpl implements StudentsRepository {
     private Connection connection;
 
-    //language=SQL
-    private static final String SQL_INSERT_BY_USER_ID = "INSERT into teacher(user_id, subject) WHERE values (?,?)";
-
-    //language=SQL
-    private static final String SQL_SELECT_BY_ID = "SELECT  * from teacher WHERE teacher_id=?";
-
-
-
-    //language=SQL
-    private static final String SQL_FIND_ALL = "SELECT * from teacher";
-
-    //language=SQL
-    private static final String SQL_SAVE = "INSERT into teacher(    user_id, subject) values (?,?)";
-
-    //language=SQL
-    private static final String SQL_UPDATE =
-            "UPDATE teacher SET user_id = ?, subject = ? WHERE  teacher_id = ?";
-
-
-    //TODO(do this later)
-
-    public TeachersRepositoryJDBCImpl() {
+    public StudentsRepositoryJDBCImpl(){
         try {
             this.connection = ConnectionProvider.getConnection();
         } catch (ClassNotFoundException e) {
@@ -43,63 +20,56 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
         }
     }
 
+
+
+    //language=SQL
+    private static final String SQL_SELECT_BY_ID = "SELECT  * from student WHERE student_id=?";
+
+
+    //language=SQL
+    private static final String SQL_FIND_ALL = "SELECT * from student";
+
+    //language=SQL
+    private static final String SQL_SAVE = "INSERT into student( user_id, group_number) values (?,?)";
+
+    //language=SQL
+    private static final String SQL_UPDATE =
+            "UPDATE student SET user_id = ?, group_number = ? WHERE  student_id = ?";
+
     @Override
-    public List<Group> findAllGroups() {
+    public List<Homework> findAllHomeworkBySubject(String subject) {
         return null;
     }
 
     @Override
-    public List<Student> findAllStudent() {
+    public List<Student> findAllMyClassmates(Integer group) {
         return null;
     }
 
     @Override
-    public List<Homework> findAllHomeworkToGroup(Integer group) {
-        return null;
-    }
-
-    @Override
-    public void addHomework(Integer group, Integer deadline) {
+    public void addStudentByUserId(Long id) {
 
     }
 
     @Override
-    public void editHomework(Integer id) {
+    public void makeHomework(Integer id) {
 
     }
 
     @Override
-    public void deleteHomework(Integer id) {
-
+    public boolean isMakeHomework(Integer id) {
+        return false;
     }
 
     @Override
-    public void addTeacherByUserId(Long id,Long sub_id) {
-//        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO teacher(user_id, subjects_id) values (?,?) ")){
-//            preparedStatement.setLong(1,id);
-//            preparedStatement.setLong(2, sub_id);
-//            try(ResultSet resultSet = preparedStatement.executeQuery()){
-//                if(resultSet.next()){
-//
-//                }
-//            }
-//            return Optional.empty();
-//        } catch (SQLException e) {
-//            throw  new  IllegalStateException(e);
-//        }
-    }
-
-
-
-    @Override
-    public List<Teacher> findAll() {
-        Teacher teacher;
-        List<Teacher> users = new ArrayList<>();
+    public List<Student> findAll() {
+        Student student;
+        List<Student> users = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL)) {
             while (resultSet.next()) {
-                teacher = teacherRowMapper.mapRow(resultSet);
-                users.add(teacher);
+                student = studentRowMapper.mapRow(resultSet);
+                users.add(student);
             }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
@@ -108,14 +78,14 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     }
 
     @Override
-    public Optional<Teacher> findById(Long id) {
+    public Optional<Student> findById(Long id) {
         if(id<0) return Optional.empty();
         try {
             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_ID);
             statement.setLong(1, id);
             try(ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return Optional.of(teacherRowMapper.mapRow(resultSet));
+                    return Optional.of(studentRowMapper.mapRow(resultSet));
                 }
             }
             return Optional.empty();
@@ -125,10 +95,10 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     }
 
     @Override
-    public void save(Teacher entity) {
+    public void save(Student entity) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE, Statement.RETURN_GENERATED_KEYS)) {
-           preparedStatement.setLong(1,entity.getUser_id());
-           preparedStatement.setString(2,entity.getSubject());
+            preparedStatement.setLong(1,entity.getUser_id());
+            preparedStatement.setLong(2,entity.getGroup());
 
             int updRows = preparedStatement.executeUpdate();
             if (updRows == 0) {
@@ -154,10 +124,10 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     }
 
     @Override
-    public void update(Teacher entity) {
+    public void update(Student entity) {
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE)){
             preparedStatement.setLong(1,entity.getUser_id());
-            preparedStatement.setString(2,entity.getSubject());
+            preparedStatement.setLong(2,entity.getGroup());
 
             int updRows = preparedStatement.executeUpdate();
             if (updRows == 0) {
@@ -166,7 +136,6 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
         } catch (SQLException e){
             throw new IllegalStateException(e);
         }
-
     }
 
     @Override
@@ -178,7 +147,7 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
         //Использование try-with-resources необходимо для гарантированного закрытия statement,вне зависимости от успешности операции.
         try (Statement statement = connection.createStatement()) {
             //Выолняем запрос и получаем колличество изменённых строк
-            int updRows = statement.executeUpdate("DELETE from teacher where teacher_id = " + id + ";");
+            int updRows = statement.executeUpdate("DELETE from student where student_id = " + id + ";");
             if (updRows == 0) {
                 //Если ничего не было изменено, значит возникла ошибка
                 //Возбуждаем соответсвующее исключений
@@ -192,18 +161,16 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     }
 
     @Override
-    public void delete(Teacher entity) {
+    public void delete(Student entity) {
 
     }
 
-    private RowMapper<Teacher> teacherRowMapper = row -> {
+    private RowMapper<Student> studentRowMapper = row -> {
         //Получаем id из соответствующей колонки
-        Long teacher_id = row.getLong("teacher_id");
+        Long student_id = row.getLong("student_id");
         Long user_id = row.getLong("user_id");
-        String subject = row.getString("subject");
+        Integer group_number = row.getInt("group_number");
         //создаём и возвращаем объект User из полученных данных
-        return new Teacher(teacher_id,user_id,subject);
+        return new Student(student_id,user_id,group_number);
     };
-
-
 }

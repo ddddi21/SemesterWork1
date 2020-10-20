@@ -16,6 +16,12 @@ public class UserRepositoryJDBCImpl implements UserRepository {
     private static final String SQL_SELECT_BY_ID = "SELECT  * from all_user WHERE user_id=?";
 
     //language=SQL
+    private static final String SQL_SELECT_BY_EMAIL = "SELECT  * from all_user WHERE email = ?";
+
+    //language=SQL
+    private static final String SQL_SELECT_BY_EMAIL_AND_PASSWORD = "SELECT * from all_user WHERE email = ? and password = ?";
+
+    //language=SQL
     private static final String SQL_SELECT_ID_BY_EMAIL = "SELECT user_id from all_user WHERE email=?";
 
     //language=SQL
@@ -60,6 +66,22 @@ public class UserRepositoryJDBCImpl implements UserRepository {
     }
 
     @Override
+    public boolean isExist(String email, String password) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_BY_EMAIL_AND_PASSWORD)){
+            preparedStatement.setString(1,email);
+            preparedStatement.setString(2,password);
+            try(ResultSet resultSet = preparedStatement.executeQuery()){
+                if(resultSet.next()){
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException e) {
+            throw  new  IllegalStateException(e);
+        }
+    }
+
+    @Override
     public List findAll() {
         User user;
         List<User> users = new ArrayList<>();
@@ -73,6 +95,22 @@ public class UserRepositoryJDBCImpl implements UserRepository {
             throw new IllegalStateException(e);
         }
         return users;
+    }
+
+    @Override
+    public Optional findByEmail(String email) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_EMAIL);
+            statement.setString(1, email);
+            try(ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(userRowMapper.mapRow(resultSet));
+                }
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override

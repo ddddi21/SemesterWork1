@@ -3,10 +3,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>${name}!</title>
+    <title>${email}!</title>
 </head>
 <body>
-<h2>Welcome back, ${name}!</h2>
+<h2>Welcome back, ${email}!</h2>
 <br>
 <p>Your email: ${email}</p>
 <p>How are you?</p><br>

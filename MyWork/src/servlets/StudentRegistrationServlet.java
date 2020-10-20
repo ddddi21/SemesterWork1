@@ -1,10 +1,12 @@
 package servlets;
 
 import Singletones.ConnectionProvider;
+import models.Student;
 import repositories.UserRepository;
 import repositories.UserRepositoryJDBCImpl;
 import services.Helper;
 import services.LoginService;
+import services.StudentService;
 import services.UserService;
 
 import javax.servlet.ServletException;
@@ -30,6 +32,7 @@ public class StudentRegistrationServlet extends HttpServlet {
     private LoginService loginService;
     private UserService userService;
     private Optional<String> email;
+    private StudentService studentService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -50,22 +53,18 @@ public class StudentRegistrationServlet extends HttpServlet {
         Map<String, Object> root = new HashMap<>();
         root.put("group",group);
         root.put("role", role);
+        root.put("email", email.get());
 
-        try {
-            Optional<Long> id_candidate = userService.findIdByEmail(email.get());
-            if (!id_candidate.isPresent()) {
-                Optional.empty();
-            } else {
-                Long id = id_candidate.get();
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT into student (user_id, group_number) values (?,?)");
-                //TODO(как вытаскивать айди юзера для табл со студентами?)
-                preparedStatement.setLong(1, id);
-                preparedStatement.setInt(2, group);
-            }
-        }catch(SQLException e){
-                throw new IllegalStateException(e);
-            }
-            resp.sendRedirect("/hello");
+        Optional<Long> id_candidate = userService.findIdByEmail(email.get());
+        if (!id_candidate.isPresent()) {
+            Optional.empty();
+            root.put("message","incorrect password or email");
+            helper.render(req, resp, "login.ftl", root);
+        } else {
+            Long id = id_candidate.get();
+            studentService.save(new Student(id,group));
+            helper.render(req, resp, "hello.ftl", root);
+        }
             //TODO(rewrite)
 
     }
@@ -73,6 +72,7 @@ public class StudentRegistrationServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         this.userService = new UserService();
+        studentService = new StudentService();
         helper = new Helper();
         try {
             Class.forName("org.postgresql.Driver");

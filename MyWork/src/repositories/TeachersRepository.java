@@ -12,7 +12,8 @@ public interface TeachersRepository extends CrudRepository <Teacher> {
     List <Student>findAllStudent();
     List <Homework> findAllHomeworkToGroup(Integer group);
 
-    void addTeacherByUserId(Long id);
+    void addTeacherByUserId(Long id, Long sub_id);
+//    void addSubjects()
     void addHomework(Integer group, Integer deadline);
     void editHomework(Integer id);
     void deleteHomework(Integer id);
