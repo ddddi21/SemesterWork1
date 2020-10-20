@@ -14,6 +14,5 @@ public interface CrudRepository <T> {
     void deleteById(Long id);
     void delete(T entity);
 
-    List <Homework> findAllHomeworkWithDeadlineLike(Integer deadline);
 
 }

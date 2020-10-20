@@ -9,7 +9,7 @@
 <#if message?has_content>
     <p>${message}</p>
 </#if>
-<form method="post" action="/registration_for_student">
+<form method="post" action="/studentRegistration">
     <p>Please, choose your group</p>
     <p><select name="select_group" multiple>
             <option value="901">901</option>

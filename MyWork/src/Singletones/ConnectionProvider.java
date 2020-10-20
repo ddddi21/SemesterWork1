@@ -10,6 +10,8 @@ public class ConnectionProvider {
     private static final String url = "jdbc:postgresql://localhost:5432/sem1_db";
     private static final String driverClassName = "org.postgresql.Driver";
 
+    //TODO(rewrite to singletone)
+
     private ConnectionProvider() throws ClassNotFoundException {
         Class.forName(driverClassName);
     }

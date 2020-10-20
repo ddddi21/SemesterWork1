@@ -21,23 +21,25 @@ public class LoginServlet extends HttpServlet {
     private LoginService loginService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         helper.render(req, resp, "login.ftl",new HashMap<>());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         File file = new File("src/users.txt");
         FileWriter writer = new FileWriter(file, true);
-        String username = req.getParameter("username");
+        String name = req.getParameter("first_name");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
-        String role = req.getParameter("role");
         boolean result = loginService.login(email, password);
         resp.setContentType("text/html");
-        resp.setCharacterEncoding("UTF-8");
         Map<String, Object> root = new HashMap<>();
         if(result){
-            root.put("name", username);
+            root.put("name", name);
             root.put("email", email);
             helper.render(req, resp, "profile.ftl", root);
 

@@ -79,8 +79,6 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
 
     }
 
-    @Override
-    public List<Homework> findAllHomeworkWithDeadlineLike(Integer deadline) {
-        return null;
-    }
+
+
 }

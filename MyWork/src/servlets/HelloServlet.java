@@ -23,15 +23,18 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        String name = req.getParameter("first_name");
         String email = req.getParameter("email");
+        String role = req.getParameter("role");
 
         resp.setContentType("text/html");
-
 
         Map<String, Object> objectMap = new HashMap<>();
         objectMap.put("name", name);
         objectMap.put("email", email);
+        objectMap.put("role", role);
         helper.render(req, resp, "hello.ftl", objectMap);
     }
 }

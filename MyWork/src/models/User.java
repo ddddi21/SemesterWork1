@@ -4,12 +4,13 @@ import java.util.Objects;
 
 public class User {
     private Long id;
-    private String first_name;
+    private String firstName;
     private String lastName;
+    private String role;
     private Integer age;
     private String password;
     private String email;
-//    private String role;
+    //TODO(add photo_path)
 
     public User(){
 
@@ -17,7 +18,7 @@ public class User {
 
     public User(Long id, String first_name, String lastName, Integer age, String password, String email) {
         this.id = id;
-        this.first_name = first_name;
+        this.firstName = first_name;
         this.lastName = lastName;
         this.age = age;
         this.password = password;
@@ -30,9 +31,19 @@ public class User {
     }
 
     public User(String username, String password, String email) {
-        this.first_name = username;
+        this.firstName = username;
         this.password = password;
         this.email = email;
+    }
+
+    public User(Long id, String firstName, String lastName, String role, Integer age, String email, String password) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.age = age;
+        this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -41,14 +52,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
     }
 
     public String getLastName() {
@@ -67,9 +70,6 @@ public class User {
         this.age = age;
     }
 
-    public String getUsername() {
-        return first_name;
-    }
 
     public String getEmail() {
         return email;
@@ -79,16 +79,28 @@ public class User {
         this.email = email;
     }
 
-    public void setUsername(String username) {
-        this.first_name = username;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
@@ -101,6 +113,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUsername(), getPassword());
+        return Objects.hash(getEmail(), getPassword());
     }
 }

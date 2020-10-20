@@ -9,7 +9,7 @@
 <#if message?has_content>
     <p>${message}</p>
 </#if>
-<form method="post" action="/registration_for_teacher">
+<form method="post" action="/teacherRegistration">
     <label>Let's do registration</label> <br>
     <p>Please, choose your subjects</p>
     <p><select  name="select_subject" multiple>

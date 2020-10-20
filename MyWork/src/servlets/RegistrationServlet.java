@@ -29,6 +29,8 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         helper.render(req, resp, "registration.ftl",new HashMap<>());
 
     }
@@ -36,7 +38,7 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        resp.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         String firstName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
@@ -46,13 +48,12 @@ public class RegistrationServlet extends HttpServlet {
         Integer age = Integer.valueOf(req.getParameter("age"));
         Map<String, Object> root = new HashMap<>();
 
+        //TODO(check correct (not empty) fields)
+
         root.put("name", firstName);
         root.put("last_name", lastName);
         root.put("age", age);
         root.put("email", email);
-
-
-
 
         try {
             PreparedStatement preparedStatement =
@@ -64,6 +65,7 @@ public class RegistrationServlet extends HttpServlet {
             preparedStatement.setString(5,email);
             //TODO(add custom exception)
             preparedStatement.setString(6,password);
+            //TODO(add hash)
             preparedStatement.execute();
             //TODO(create tables S and T and add into them)
         } catch (SQLException e) {
@@ -71,18 +73,17 @@ public class RegistrationServlet extends HttpServlet {
         }
 
         if(role.equals("teacher")){
-            helper.render(req, resp, "registration_for_teacher.ftl", root);
+            resp.sendRedirect("/teacherRegistration");
 //            List subjects = Collections.singletonList(req.getParameter("select_subject"));
 //            TODO(перетащить в другой серлвет)
         } else{
             if(role.equals("student")){
-                helper.render(req, resp, "registration_for_student.ftl", root);
-//                Integer group = Integer.valueOf(req.getParameter("select_group"));
+                resp.sendRedirect("/studentRegistration");
             }
         }
 
 
-    }
+      }
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -93,6 +94,5 @@ public class RegistrationServlet extends HttpServlet {
             throw  new IllegalStateException(e);
         }
         this.connection = ConnectionProvider.getConnection();
-
     }
 }

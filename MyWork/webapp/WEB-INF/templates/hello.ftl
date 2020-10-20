@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>${name}!</title>
+    <title>${role}!</title>
 </head>
 <body>
-<h2>Hello ${name}! You are ${role}</h2>
+<h2>Hello ${role}! You are ${role}</h2>
 </body>
 </html>
