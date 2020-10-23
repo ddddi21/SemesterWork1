@@ -14,6 +14,7 @@
     <p>Please sign in</p>
     <input type="email" name="email" placeholder="enter email"/>
     <input type="password" name="password" placeholder="enter password"/>
+    Remember me:<input name="remember" type="checkbox"/>
     <input type="submit">
 </form>
 

@@ -18,6 +18,11 @@ public class UserService {
         return userRepositoryJDBC;
     }
 
+
+    public Optional<User> findUserByEmail(String email){
+        return userRepositoryJDBC.findByEmail(email);
+    }
+
     public boolean isUserExist(User user){
         return userRepositoryJDBC.isExist(user.getEmail(),user.getPassword());
     }

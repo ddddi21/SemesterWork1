@@ -2,6 +2,7 @@ package servlets;
 
 import Singletones.ConnectionProvider;
 import models.Student;
+import models.User;
 import repositories.UserRepository;
 import repositories.UserRepositoryJDBCImpl;
 import services.Helper;
@@ -33,13 +34,18 @@ public class StudentRegistrationServlet extends HttpServlet {
     private UserService userService;
     private Optional<String> email;
     private StudentService studentService;
+    Map<String, Object> root = new HashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         email = userService.readCookie("email",req,resp);
-        helper.render(req, resp, "registration_for_student.ftl",new HashMap<>());
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null) {
+            root.put("isCanComeIn", false);
+            helper.render(req, resp, "registration_for_student.ftl",root);
+        } else helper.render(req, resp, "profile.ftl",root);
     }
 
     @Override

@@ -98,7 +98,7 @@ public class UserRepositoryJDBCImpl implements UserRepository {
     }
 
     @Override
-    public Optional findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         try {
             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_BY_EMAIL);
             statement.setString(1, email);

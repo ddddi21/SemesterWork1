@@ -2,6 +2,7 @@ package servlets;
 
 import Singletones.ConnectionProvider;
 import models.Teacher;
+import models.User;
 import services.Helper;
 import services.LoginService;
 import services.TeacherService;
@@ -14,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 
@@ -26,15 +24,19 @@ public class TeacherRegistrationServlet extends HttpServlet {
     private Helper helper;
     private Optional<String> email;
     private UserService userService;
-    private LoginService loginService;
     private TeacherService teacherService;
+    Map<String, Object> root = new HashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         email = userService.readCookie("email",req,resp);
-        helper.render(req, resp, "registration_for_teacher.ftl",new HashMap<>());    }
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null) {
+            root.put("isCanComeIn", false);
+            helper.render(req, resp, "registration_for_teacher.ftl",root);
+        } else helper.render(req, resp, "profile.ftl",root);    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

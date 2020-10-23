@@ -3,21 +3,17 @@ package servlets;
 import Singletones.ConnectionProvider;
 import models.User;
 import services.Helper;
-import services.LoginService;
 import services.UserService;
 
+
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -25,15 +21,18 @@ import java.util.Map;
 public class RegistrationServlet extends HttpServlet {
     private Connection connection;
     private Helper helper;
-    private LoginService loginService;
     private UserService userService;
+    Map<String, Object> root = new HashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        helper.render(req, resp, "registration.ftl",new HashMap<>());
-
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null) {
+                root.put("isCanComeIn", false);
+                helper.render(req, resp, "registration.ftl",root);
+        } else resp.sendRedirect("/profile");
     }
 
     @Override
@@ -41,13 +40,13 @@ public class RegistrationServlet extends HttpServlet {
         resp.setContentType("text/html");
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+        PrintWriter writer = resp.getWriter();
         String firstName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
         String role = req.getParameter("role");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        Integer age = Integer.valueOf(req.getParameter("age"));
-        Map<String, Object> root = new HashMap<>();
+        String age = req.getParameter("age");
 
         //TODO(check correct (not empty) fields)
 
@@ -59,28 +58,32 @@ public class RegistrationServlet extends HttpServlet {
         //TODO(add custom exception)
         //TODO(add hash to password)
 
-        User user = new User(firstName,lastName,age,email,password,role);
-//        if(userService.isAlreadyHaveAccount(email)){
-//            root.put("message", "you already have an account! Please sign in");
-//            helper.render(req, resp, "login.ftl", root);
-//        }else {
-            userService.save(user);
+        if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || age.isEmpty() ||role==null){
+            root.put("message", "Empty fields!");
+            helper.render(req, resp, "registration.ftl", root);
+        }else {
+            if(userService.isAlreadyHaveAccount(email)){
+                writer.write("you already have an account! Please sign in");
+                //TODO(текст кароч не отображается но пофег пока)
+                resp.sendRedirect("/login");
+            }else {
+                User user = new User(firstName,lastName,Integer.parseInt(age),email,password,role);
+                userService.save(user);
+                    Cookie cookie_email = new Cookie("email", email);
+                    cookie_email.setMaxAge(-1);
+                    resp.addCookie(cookie_email);
 
-
-            Cookie cookie_email = new Cookie("email", email);
-            cookie_email.setMaxAge(-1);
-            resp.addCookie(cookie_email);
-
-            if (role.equals("teacher")) {
-                resp.sendRedirect("/teacherRegistration");
-            } else {
-                if (role.equals("student")) {
-                    resp.sendRedirect("/studentRegistration");
+                    if (role.equals("teacher")) {
+                        resp.sendRedirect("/teacherRegistration");
+                    } else {
+                        if (role.equals("student")) {
+                            resp.sendRedirect("/studentRegistration");
+                        }
+                    }
                 }
             }
-        }
 
-//      }
+      }
 
     @Override
     public void init(ServletConfig config) throws ServletException {

@@ -5,6 +5,7 @@
     <title>${role}!</title>
 </head>
 <body>
-<h2>Hello ${email}! You are ${role}</h2>
+<h2>Hello ${name}! You are ${role}</h2>
+Your email is ${email}
 </body>
 </html>

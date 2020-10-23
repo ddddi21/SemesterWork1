@@ -7,10 +7,7 @@ import services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,17 +33,37 @@ public class LoginServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
+        String remember = req.getParameter("remember");
         //TODO(not done)
         resp.setContentType("text/html");
         Map<String, Object> root = new HashMap<>();
-        if(userService.isUserExist(new User(email,password))){
-            HttpSession session = req.getSession();
-            root.put("email", email);
-            helper.render(req, resp, "profile.ftl", root);
 
-        }else{
-            root.put("message","incorrect password or email");
+        if(email.isEmpty() || password.isEmpty()){
+            root.put("message", "Empty fields!");
             helper.render(req, resp, "login.ftl", root);
+        } else {
+            if (userService.isUserExist(new User(email, password))) {
+                if (remember != null) {
+                    Cookie cookieForAuth = new Cookie("cookieForAuth", email);
+                    cookieForAuth.setMaxAge(-1);
+                    resp.addCookie(cookieForAuth);
+                }
+                HttpSession session = req.getSession();
+                User user = userService.findUserByEmail(email).get();
+                //TODO(создать препода/студента с помощью методов jdbc который нужно сделать)
+                session.setAttribute("user", user);
+                root.put("email", email);
+                root.put("name", user.getFirstName());
+                root.put("role", user.getRole());
+                root.put("age", user.getAge());
+                root.put("lastName", user.getLastName());
+                //TODO(в зависимости от препод/ученик сделать разный рендер профилей + сделать шаблоны к ним + положить в рут персональные параметры)
+                resp.sendRedirect("/profile");
+
+            } else {
+                root.put("message", "incorrect password or email");
+                helper.render(req, resp, "login.ftl", root);
+            }
         }
     }
 
@@ -55,6 +72,5 @@ public class LoginServlet extends HttpServlet {
         helper = new Helper();
         userService = new UserService();
         loginService = new LoginService();
-        //TODO(filter and cookies)
     }
 }

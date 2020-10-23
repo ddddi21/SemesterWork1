@@ -6,12 +6,11 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.HTML;
 import java.io.IOException;
 import java.util.HashMap;
 
 @WebServlet("/home")
-public class HomeServlet extends HelloServlet {
+public class HomeServlet extends ProfileServlet {
     private Helper helper;
 
     @Override
