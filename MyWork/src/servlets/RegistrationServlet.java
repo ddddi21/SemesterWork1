@@ -59,26 +59,28 @@ public class RegistrationServlet extends HttpServlet {
         //TODO(add custom exception)
         //TODO(add hash to password)
 
+        User user = new User(firstName,lastName,age,email,password,role);
+//        if(userService.isAlreadyHaveAccount(email)){
+//            root.put("message", "you already have an account! Please sign in");
+//            helper.render(req, resp, "login.ftl", root);
+//        }else {
+            userService.save(user);
 
-       userService.save(new User(firstName,lastName,age,email,password,role));
 
-       HttpSession session = req.getSession();
-       session.setAttribute("email", email);
+            Cookie cookie_email = new Cookie("email", email);
+            cookie_email.setMaxAge(-1);
+            resp.addCookie(cookie_email);
 
-        Cookie cookie_email = new Cookie("email", email);
-        cookie_email.setMaxAge(-1);
-        resp.addCookie(cookie_email);
-
-        if(role.equals("teacher")){
-            resp.sendRedirect("/teacherRegistration");
-        } else{
-            if(role.equals("student")){
-                resp.sendRedirect("/studentRegistration");
+            if (role.equals("teacher")) {
+                resp.sendRedirect("/teacherRegistration");
+            } else {
+                if (role.equals("student")) {
+                    resp.sendRedirect("/studentRegistration");
+                }
             }
         }
 
-
-      }
+//      }
 
     @Override
     public void init(ServletConfig config) throws ServletException {

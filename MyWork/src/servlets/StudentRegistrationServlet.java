@@ -63,7 +63,8 @@ public class StudentRegistrationServlet extends HttpServlet {
         } else {
             Long id = id_candidate.get();
             studentService.save(new Student(id,group));
-            helper.render(req, resp, "hello.ftl", root);
+            root.put("message", "You create a new account!");
+            helper.render(req, resp, "login.ftl", root);
         }
             //TODO(rewrite)
 

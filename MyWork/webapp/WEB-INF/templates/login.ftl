@@ -12,8 +12,8 @@
 <form method="post" action="/login">
     <label>Welcome</label> <br>
     <p>Please sign in</p>
-    <input type="password" name="password" placeholder="enter password"/>
     <input type="email" name="email" placeholder="enter email"/>
+    <input type="password" name="password" placeholder="enter password"/>
     <input type="submit">
 </form>
 

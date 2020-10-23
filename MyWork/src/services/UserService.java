@@ -22,6 +22,14 @@ public class UserService {
         return userRepositoryJDBC.isExist(user.getEmail(),user.getPassword());
     }
 
+    public boolean isAlreadyHaveAccount(String email){
+        if(userRepositoryJDBC.findByEmail(email).isPresent()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public boolean isUserAdd(User user){
         userRepositoryJDBC.save(user);
         return true;
