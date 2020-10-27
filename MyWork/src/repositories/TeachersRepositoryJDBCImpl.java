@@ -26,7 +26,7 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     private static final String SQL_FIND_ALL = "SELECT * from teacher";
 
     //language=SQL
-    private static final String SQL_SAVE = "INSERT into teacher(    user_id, subject) values (?,?)";
+    private static final String SQL_SAVE = "INSERT into teacher(user_id, subject, group) values (?,?,?)";
 
     //language=SQL
     private static final String SQL_UPDATE =
@@ -129,6 +129,7 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE, Statement.RETURN_GENERATED_KEYS)) {
            preparedStatement.setLong(1,entity.getUser_id());
            preparedStatement.setString(2,entity.getSubject());
+           preparedStatement.setInt(3, entity.getGroups());
 
             int updRows = preparedStatement.executeUpdate();
             if (updRows == 0) {

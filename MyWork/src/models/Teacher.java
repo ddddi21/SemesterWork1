@@ -10,7 +10,7 @@ public class Teacher extends User {
 //    private String lastName;
 //    private Integer age;
 //    private String school;
-    private List <Group> groups;
+    private Integer groups;
     private String subject;
     private Long user_id;
 
@@ -24,57 +24,51 @@ public class Teacher extends User {
         super(username, password, email);
     }
 
-    public Teacher(List<Group> groups, String subject) {
+    public Teacher(Integer groups, String subject) {
         this.groups = groups;
         this.subject = subject;
     }
 
 
-    public Teacher(String email, String password, List<Group> groups, String subject) {
+    public Teacher(String email, String password, Integer groups, String subject) {
         super(email, password);
         this.groups = groups;
         this.subject = subject;
     }
 
-    public Teacher(String username, String password, String email, List<Group> groups, String subject) {
+    public Teacher(String username, String password, String email, Integer groups, String subject) {
         super(username, password, email);
         this.groups = groups;
         this.subject = subject;
     }
 
-    public Teacher(List<Group> groups, String subject, Long user_id) {
+    public Teacher(Integer groups, String subject, Long user_id) {
         this.groups = groups;
         this.subject = subject;
         this.user_id = user_id;
     }
 
-    public Teacher(String first_name, String lastName, Integer age, String email, String password, String role, List<Group> groups,String subject, Long user_id) {
+    public Teacher(String first_name, String lastName, Integer age, String email, String password, String role, Integer groups,String subject, Long user_id) {
         super(first_name, lastName, age, email, password, role);
         this.groups = groups;
         this.subject = subject;
         this.user_id = user_id;
     }
 
-    public Teacher(String email, String password, List<Group> groups,String subject, Long user_id) {
+    public Teacher(String email, String password, Integer groups,String subject, Long user_id) {
         super(email, password);
         this.groups = groups;
         this.subject = subject;
         this.user_id = user_id;
     }
 
-    public Teacher(String username, String password, String email, List<Group> groups, String subject, Long user_id) {
+    public Teacher(String username, String password, String email, Integer groups, String subject, Long user_id) {
         super(username, password, email);
         this.groups = groups;
         this.subject = subject;
         this.user_id = user_id;
     }
 
-    public Teacher(Long id, String firstName, String lastName, String role, Integer age, String email, String password, List<Group> groups, String subject, Long user_id) {
-        super(id, firstName, lastName, role, age, email, password);
-        this.groups = groups;
-        this.subject = subject;
-        this.user_id = user_id;
-    }
 
     public Teacher(Long teacher_id, Long user_id, String subject) {
         this.teacher_id = teacher_id;
@@ -87,6 +81,12 @@ public class Teacher extends User {
         this.subject = subjects;
     }
 
+    public Teacher(Long id, String subjects, Integer group) {
+        this.user_id = id;
+        this.subject = subjects;
+        this.groups = group;
+    }
+
     public Long getUser_id() {
         return user_id;
     }
@@ -97,11 +97,11 @@ public class Teacher extends User {
 
 
 
-    public List<Group> getGroups() {
+    public Integer getGroups() {
         return groups;
     }
 
-    public void setGroups(List<Group> groups) {
+    public void setGroups(Integer groups) {
         this.groups = groups;
     }
 

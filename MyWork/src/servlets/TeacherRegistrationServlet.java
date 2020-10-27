@@ -45,6 +45,7 @@ public class TeacherRegistrationServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         String role = "teacher";
         String subjects = req.getParameter("select_subject");
+        Integer group = Integer.valueOf(req.getParameter("select_group"));
         Map<String, Object> root = new HashMap<>();
         root.put("role", role);
         root.put("email", email.get());
@@ -57,7 +58,7 @@ public class TeacherRegistrationServlet extends HttpServlet {
             helper.render(req, resp, "login.ftl", root);
         } else {
             Long id = id_candidate.get();
-            teacherService.save(new Teacher(id,subjects));
+            teacherService.save(new Teacher(id,subjects,group));
             root.put("message", "You create a new account!");
             helper.render(req, resp, "login.ftl", root);
         }
