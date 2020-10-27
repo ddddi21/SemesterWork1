@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User> {
-    List<Homework> findAllHomeworkWithDeadlineLike(Integer deadline);
     Optional findIdByEmail(String email);
     Optional findByEmail(String email);
     boolean isExist(String email,String password);

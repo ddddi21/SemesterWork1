@@ -1,6 +1,6 @@
 package repositories;
 
-import Singletones.ConnectionProvider;
+import singletones.ConnectionProvider;
 import models.Homework;
 import models.Student;
 
@@ -36,30 +36,13 @@ public class StudentsRepositoryJDBCImpl implements StudentsRepository {
     private static final String SQL_UPDATE =
             "UPDATE student SET user_id = ?, group_number = ? WHERE  student_id = ?";
 
-    @Override
-    public List<Homework> findAllHomeworkBySubject(String subject) {
-        return null;
-    }
+
 
     @Override
     public List<Student> findAllMyClassmates(Integer group) {
         return null;
     }
 
-    @Override
-    public void addStudentByUserId(Long id) {
-
-    }
-
-    @Override
-    public void makeHomework(Integer id) {
-
-    }
-
-    @Override
-    public boolean isMakeHomework(Integer id) {
-        return false;
-    }
 
     @Override
     public List<Student> findAll() {

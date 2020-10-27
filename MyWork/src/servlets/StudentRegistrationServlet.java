@@ -1,10 +1,8 @@
 package servlets;
 
-import Singletones.ConnectionProvider;
+import singletones.ConnectionProvider;
 import models.Student;
 import models.User;
-import repositories.UserRepository;
-import repositories.UserRepositoryJDBCImpl;
 import services.Helper;
 import services.LoginService;
 import services.StudentService;
@@ -12,15 +10,11 @@ import services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

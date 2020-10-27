@@ -1,10 +1,9 @@
 package servlets;
 
-import Singletones.ConnectionProvider;
+import singletones.ConnectionProvider;
 import models.Teacher;
 import models.User;
 import services.Helper;
-import services.LoginService;
 import services.TeacherService;
 import services.UserService;
 

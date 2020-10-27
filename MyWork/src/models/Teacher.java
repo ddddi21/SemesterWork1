@@ -87,6 +87,13 @@ public class Teacher extends User {
         this.groups = group;
     }
 
+    public Teacher(Long teacher_id, Long user_id, String subject, Integer group_number) {
+        this.teacher_id = teacher_id;
+        this.user_id = user_id;
+        this.subject = subject;
+        this.groups = group_number;
+    }
+
     public Long getUser_id() {
         return user_id;
     }

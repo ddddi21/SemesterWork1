@@ -1,7 +1,6 @@
 package repositories;
 
-import Singletones.ConnectionProvider;
-import models.Homework;
+import singletones.ConnectionProvider;
 import models.User;
 
 import java.sql.*;
@@ -44,10 +43,6 @@ public class UserRepositoryJDBCImpl implements UserRepository {
         }
     }
 
-    @Override
-    public List<Homework> findAllHomeworkWithDeadlineLike(Integer deadline) {
-        return null;
-    }
 
     @Override
     public Optional <Long> findIdByEmail(String email) {

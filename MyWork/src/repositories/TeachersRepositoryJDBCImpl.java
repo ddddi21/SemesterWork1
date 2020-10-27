@@ -1,7 +1,6 @@
 package repositories;
 
-import Singletones.ConnectionProvider;
-import models.Group;
+import singletones.ConnectionProvider;
 import models.Homework;
 import models.Student;
 import models.Teacher;
@@ -30,7 +29,7 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
 
     //language=SQL
     private static final String SQL_UPDATE =
-            "UPDATE teacher SET user_id = ?, subject = ? WHERE  teacher_id = ?";
+            "UPDATE teacher SET user_id = ?, subject = ?, group_number = ? WHERE  teacher_id = ?";
 
 
     //TODO(do this later)
@@ -44,7 +43,7 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     }
 
     @Override
-    public List<Group> findAllGroups() {
+    public List <Integer> findAllGroups() {
         return null;
     }
 
@@ -73,21 +72,6 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
 
     }
 
-    @Override
-    public void addTeacherByUserId(Long id,Long sub_id) {
-//        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO teacher(user_id, subjects_id) values (?,?) ")){
-//            preparedStatement.setLong(1,id);
-//            preparedStatement.setLong(2, sub_id);
-//            try(ResultSet resultSet = preparedStatement.executeQuery()){
-//                if(resultSet.next()){
-//
-//                }
-//            }
-//            return Optional.empty();
-//        } catch (SQLException e) {
-//            throw  new  IllegalStateException(e);
-//        }
-    }
 
 
 
@@ -159,6 +143,7 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE)){
             preparedStatement.setLong(1,entity.getUser_id());
             preparedStatement.setString(2,entity.getSubject());
+            preparedStatement.setInt(3,entity.getGroups());
 
             int updRows = preparedStatement.executeUpdate();
             if (updRows == 0) {
@@ -202,8 +187,9 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
         Long teacher_id = row.getLong("teacher_id");
         Long user_id = row.getLong("user_id");
         String subject = row.getString("subject");
+        Integer group_number = row.getInt("group_number");
         //создаём и возвращаем объект User из полученных данных
-        return new Teacher(teacher_id,user_id,subject);
+        return new Teacher(teacher_id,user_id,subject, group_number);
     };
 
 
