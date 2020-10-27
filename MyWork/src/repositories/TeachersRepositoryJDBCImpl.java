@@ -26,7 +26,7 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     private static final String SQL_FIND_ALL = "SELECT * from teacher";
 
     //language=SQL
-    private static final String SQL_SAVE = "INSERT into teacher(user_id, subject, group) values (?,?,?)";
+    private static final String SQL_SAVE = "INSERT into teacher(user_id, subject, group_number) values (?,?,?)";
 
     //language=SQL
     private static final String SQL_UPDATE =
