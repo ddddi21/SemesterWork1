@@ -10,6 +10,7 @@ public class User {
     private Integer age;
     private String password;
     private String email;
+    private String imagePath;
     //TODO(add photo_path)
 
     public User(){
@@ -101,6 +102,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @Override

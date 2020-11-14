@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="PostgreSQL - postgres@localhost" uuid="39c62ffd-bc14-4081-ba63-7645e8b0a29a">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
-    </data-source>
     <data-source source="LOCAL" name="sem1_db@localhost" uuid="30fcdd94-c59e-401e-bd32-64ea7d3ad759">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/sem1_db</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="films@mail.skyseven.ru" uuid="bc67f527-5816-48dc-b956-45f73ec29c05">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://mail.skyseven.ru:5432/films</jdbc-url>
     </data-source>
   </component>
 </project>

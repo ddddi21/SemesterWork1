@@ -57,4 +57,8 @@ public class UserService {
         userRepositoryJDBC.save(user);
     }
 
+    public void update(User user){
+        userRepositoryJDBC.update(user);
+    }
+
 }

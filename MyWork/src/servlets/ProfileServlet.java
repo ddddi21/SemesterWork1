@@ -35,6 +35,7 @@ public class ProfileServlet extends HttpServlet {
             root.put("email", user.getEmail());
             root.put("role", user.getRole());
             root.put("age",user.getAge());
+            root.put("imagepath",user.getImagePath());
             root.put("lastName",user.getLastName());
             helper.render(req, resp, "profile.ftl", root);
         }else {
