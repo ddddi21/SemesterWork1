@@ -4,13 +4,14 @@ import services.Helper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
 @WebServlet("/home")
-public class HomeServlet extends ProfileServlet {
+public class HomeServlet extends HttpServlet {
     private Helper helper;
 
     @Override

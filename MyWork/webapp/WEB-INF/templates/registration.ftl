@@ -1,7 +1,7 @@
 <#ftl encoding="utf-8">
-<#include "base.ftl"/>
+<#--<#include "base.ftl"/>-->
 
-<#macro content>
+<#--<#macro content>-->
 <!DOCTYPE html>
 <html lang="ru" xmlns:margin-top="http://www.w3.org/1999/xhtml">
 <head>
@@ -96,6 +96,7 @@
 <#if errors??>
     <#list errors as g>
         <p>${g}</p>
+        <hr>
     </#list>
 <#else>
 </#if>
@@ -127,8 +128,8 @@
 
 </body>
 </html>
-</#macro>
-<#macro title>
-    <title>Registration</title>
-</#macro>
-<@display_page />
+<#--</#macro>-->
+<#--<#macro title>-->
+<#--    <title>Registration</title>-->
+<#--</#macro>-->
+<#--<@display_page />-->
