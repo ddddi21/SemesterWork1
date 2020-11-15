@@ -1,4 +1,6 @@
 <#ftl encoding="utf-8">
+<#include "base.ftl" />
+
 <!DOCTYPE html>
 <html lang="ru" xmlns:margin-top="http://www.w3.org/1999/xhtml">
 <head>

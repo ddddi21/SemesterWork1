@@ -38,7 +38,7 @@ public class StudentRegistrationServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         if (user == null) {
             root.put("isCanComeIn", false);
-            helper.render(req, resp, "registration_for_student.ftl",root);
+            helper.render(req, resp, "registrationForStudent.ftl",root);
         } else helper.render(req, resp, "profile.ftl",root);
     }
 

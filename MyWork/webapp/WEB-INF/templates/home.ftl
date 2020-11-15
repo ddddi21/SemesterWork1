@@ -11,7 +11,6 @@
     body {
         margin: 0;
         font-family: 'Montserrat', sans-serif;
-        background-image: url("../../images/1.jpg");
         font-size: 15px;
         line-height: 1.6;
         color: #333;

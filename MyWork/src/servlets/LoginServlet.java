@@ -1,6 +1,7 @@
 package servlets;
 
 import models.User;
+import org.mindrot.jbcrypt.BCrypt;
 import services.Helper;
 import services.LoginService;
 import services.UserService;
@@ -42,7 +43,7 @@ public class LoginServlet extends HttpServlet {
             root.put("message", "Empty fields!");
             helper.render(req, resp, "login.ftl", root);
         } else {
-            if (userService.isUserExist(new User(email, password))) {
+            if (userService.login(email, password)) {
                 if (remember != null) {
                     Cookie cookieForAuth = new Cookie("cookieForAuth", email);
                     cookieForAuth.setMaxAge(-1);

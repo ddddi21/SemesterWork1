@@ -1,6 +1,7 @@
 package services;
 
 import models.User;
+import org.mindrot.jbcrypt.BCrypt;
 import repositories.UserRepositoryJDBCImpl;
 
 import javax.servlet.http.Cookie;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.DoubleSummaryStatistics;
+import java.util.List;
 import java.util.Optional;
 
 public class UserService {
@@ -59,6 +61,19 @@ public class UserService {
 
     public void update(User user){
         userRepositoryJDBC.update(user);
+    }
+
+    public List<User>getAllUsersLikeString(String s){
+        return userRepositoryJDBC.getAllUsersLikeString(s);
+    }
+
+    public boolean login(String username,String password){
+        Optional<User> checkUser = userRepositoryJDBC.findByEmail(username);
+        if(checkUser.isPresent()){
+            User checked = checkUser.get();
+            return BCrypt.checkpw(password,checked.getPassword());
+        }
+        else return false;
     }
 
 }
