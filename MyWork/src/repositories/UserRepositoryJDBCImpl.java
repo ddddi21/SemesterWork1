@@ -33,6 +33,8 @@ public class UserRepositoryJDBCImpl implements UserRepository {
     private static final String SQL_UPDATE =
             "UPDATE all_user SET first_name = ?, last_name = ?, age = ?, role = ?, email = ?, password = ? WHERE  user_id = ?";
 
+    private static final String SQL_FIND_ALL_USERS_LIKE="select * from users where username like ?";
+
 
 
     public UserRepositoryJDBCImpl()  {
@@ -200,6 +202,23 @@ public class UserRepositoryJDBCImpl implements UserRepository {
 
     @Override
     public void delete(User entity) {
+    }
+
+    @Override
+    public List<User> getAllUsersLikeString(String s) {
+        s += '%';
+        List<User> users = new ArrayList<>();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USERS_LIKE)){
+            preparedStatement.setString(1,s);
+            preparedStatement.execute();
+            ResultSet rs = preparedStatement.getResultSet();
+            while(rs.next()){
+                users.add(userRowMapper.mapRow(rs));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return users;
     }
 
     private RowMapper<User> userRowMapper = row -> {

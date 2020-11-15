@@ -1,5 +1,6 @@
 package servlets;
 
+import services.RegistrationValidator;
 import singletones.ConnectionProvider;
 import models.User;
 import services.Helper;
@@ -14,7 +15,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import org.mindrot.jbcrypt.BCrypt;
 
 
 @WebServlet("/registration")
@@ -23,6 +26,7 @@ public class RegistrationServlet extends HttpServlet {
     private Helper helper;
     private UserService userService;
     Map<String, Object> root = new HashMap<>();
+    private RegistrationValidator registrationValidator;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,8 +49,9 @@ public class RegistrationServlet extends HttpServlet {
         String lastName = req.getParameter("last_name");
         String role = req.getParameter("role");
         String email = req.getParameter("email");
-        String password = req.getParameter("password");
+        String password = BCrypt.hashpw(req.getParameter("password"),BCrypt.gensalt());
         String age = req.getParameter("age");
+        List<String> errors = registrationValidator.validate(email, password,age, firstName, lastName,role);
 
         //TODO(check correct (not empty) fields)
 
@@ -58,15 +63,16 @@ public class RegistrationServlet extends HttpServlet {
         //TODO(add custom exception)
         //TODO(add hash to password)
 
-        if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || age.isEmpty() ||role==null){
-            root.put("message", "Empty fields!");
+//        if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || age.isEmpty() ||role==null){
+        if(!errors.isEmpty()){
+            root.put("errors", errors);
             helper.render(req, resp, "registration.ftl", root);
         }else {
-            if(userService.isAlreadyHaveAccount(email)){
-                writer.write("you already have an account! Please sign in");
-                //TODO(текст кароч не отображается но пофег пока)
-                resp.sendRedirect("/login");
-            }else {
+//            if(userService.isAlreadyHaveAccount(email)){
+//                writer.write("you already have an account! Please sign in");
+//                //TODO(текст кароч не отображается но пофег пока)
+//                resp.sendRedirect("/login");
+//            }else {
                 User user = new User(firstName,lastName,Integer.parseInt(age),email,password,role);
                 userService.save(user);
                     Cookie cookie_email = new Cookie("email", email);
@@ -83,12 +89,13 @@ public class RegistrationServlet extends HttpServlet {
                 }
             }
 
-      }
+//      }
 
     @Override
     public void init(ServletConfig config) throws ServletException {
          helper = new Helper();
          userService = new UserService();
+        this.registrationValidator = new RegistrationValidator();
         try {
             Class.forName("org.postgresql.Driver");
             this.connection = ConnectionProvider.getConnection();

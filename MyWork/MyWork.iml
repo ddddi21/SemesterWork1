@@ -22,5 +22,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.58" level="application_server_libraries" />
     <orderEntry type="library" name="freemarker-2.3.30" level="project" />
     <orderEntry type="library" name="postgresql-42.2.9" level="project" />
+    <orderEntry type="library" name="jbcrypt-0.3m" level="project" />
   </component>
 </module>

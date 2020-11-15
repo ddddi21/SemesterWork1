@@ -1,4 +1,7 @@
 <#ftl encoding="utf-8">
+<#include "base.ftl"/>
+
+<#macro content>
 <!DOCTYPE html>
 <html lang="ru" xmlns:margin-top="http://www.w3.org/1999/xhtml">
 <head>
@@ -90,6 +93,12 @@
 <#if message?has_content>
     <p>${message}</p>
 </#if>
+<#if errors??>
+    <#list errors as g>
+        <p>${g}</p>
+    </#list>
+<#else>
+</#if>
 <form class="form" method="post" action="/registration">
     <h1 class="from__title">Регистрация</h1>
     <h3>Кто вы?</h3>
@@ -118,3 +127,8 @@
 
 </body>
 </html>
+</#macro>
+<#macro title>
+    <title>Registration</title>
+</#macro>
+<@display_page />

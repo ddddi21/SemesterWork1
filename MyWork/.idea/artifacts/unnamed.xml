@@ -9,6 +9,7 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="freemarker-2.3.30" />
           <element id="library" level="project" name="postgresql-42.2.9" />
+          <element id="library" level="project" name="jbcrypt-0.3m" />
         </element>
       </element>
       <element id="directory" name="META-INF">
