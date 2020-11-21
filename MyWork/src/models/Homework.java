@@ -20,6 +20,10 @@ public class Homework {
         this.deadline = deadline;
     }
 
+    public Homework() {
+
+    }
+
 
     public Long getId() {
         return id;
@@ -85,5 +89,14 @@ public class Homework {
     @Override
     public int hashCode() {
         return Objects.hash(id, hw_text, subject, group_number, deadline, isMake);
+    }
+
+    @Override
+    public String toString() {
+        return subject+"#%#"+hw_text+"#%#"+deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = Date.valueOf(deadline);
     }
 }

@@ -34,12 +34,18 @@ public class ProfileServlet extends HttpServlet {
             root.put("name", user.getFirstName());
             root.put("email", user.getEmail());
             root.put("role", user.getRole());
-            root.put("age",user.getAge());
-            root.put("imagepath",user.getImagePath());
-            root.put("lastName",user.getLastName());
-            helper.render(req, resp, "profile.ftl", root);
-        }else {
-            resp.sendRedirect("/home");
+            root.put("age", user.getAge());
+            root.put("imagepath", user.getImagePath());
+            root.put("lastName", user.getLastName());
+            if (user.getRole().equals("student")) {
+                helper.render(req, resp, "profil.ftl", root);
+            } else {
+                if (user.getRole().equals("teacher")) {
+                    helper.render(req, resp, "profilT.ftl", root);
+                } else {
+                    resp.sendRedirect("/home");
+                }
+            }
         }
     }
 

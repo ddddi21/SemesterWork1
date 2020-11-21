@@ -31,7 +31,7 @@ public class UserRepositoryJDBCImpl implements UserRepository {
 
     //language=SQL
     private static final String SQL_UPDATE =
-            "UPDATE all_user SET first_name = ?, last_name = ?, age = ?, role = ?, email = ?, password = ? WHERE  user_id = ?";
+            "UPDATE all_user SET first_name = ?, last_name = ?, age = ?, role = ?, email = ?, password = ?, imagepath =? WHERE  user_id = ?";
 
     private static final String SQL_FIND_ALL_USERS_LIKE="select * from users where username like ?";
 
@@ -169,6 +169,8 @@ public class UserRepositoryJDBCImpl implements UserRepository {
             preparedStatement.setString(4, entity.getRole());
             preparedStatement.setString(5, entity.getEmail());
             preparedStatement.setString(6, entity.getPassword());
+            preparedStatement.setString(7,entity.getImagePath());
+            preparedStatement.setLong(8,entity.getId());
 
             int updRows = preparedStatement.executeUpdate();
             if (updRows == 0) {
