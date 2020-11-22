@@ -36,6 +36,8 @@ public class StudentsRepositoryJDBCImpl implements StudentsRepository {
     private static final String SQL_UPDATE =
             "UPDATE student SET user_id = ?, group_number = ? WHERE  student_id = ?";
 
+    //language=SQL
+    private static final String SQL_FIND_BY_USER_ID = "SELECT * from student WHERE user_id = ?";
 
 
     @Override
@@ -43,6 +45,24 @@ public class StudentsRepositoryJDBCImpl implements StudentsRepository {
         return null;
     }
 
+
+
+    @Override
+    public Optional findByUserId(Long id) {
+        if(id<0) return Optional.empty();
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USER_ID);
+            statement.setLong(1, id);
+            try(ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(studentRowMapper.mapRow(resultSet));
+                }
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
     @Override
     public List<Student> findAll() {

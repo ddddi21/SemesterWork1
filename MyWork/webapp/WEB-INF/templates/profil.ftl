@@ -1,20 +1,15 @@
 <#ftl encoding="utf-8">
 <#include "base.ftl" />
-
-<br><br><br>
-
-<!--эту херню хз как сделать Еще макросы не забудь-->
-<!--<form method="post" action="/profile">-->
-
-<!-- Do you want to sign out? <input name="logout" type="checkbox"/>-->
-<!-- <input type="submit">-->
-
-
-
+<!DOCTYPE html>
+<html lang="en">
 <#macro content>
 <div class="container">
     <div id="main">
-
+        <ul id="nav">
+            <button type="button" class="button" ><a  href="/homework">Домашнее задание</a></button>
+            <button type="button"  class="button"><a href="#detail" data-toggle="tab">Сообщение</a></button>
+            <button type="button" class="button"><a href="/logout">Выйти</a></button>
+        </ul>
         <div class="row" id="real-estates-detail">
             <div class="col-lg-4 col-md-4 col-xs-12">
                 <div class="panel panel-default">
@@ -33,30 +28,27 @@
                                 <img src="//placehold.it/150" class="m-x-auto img-fluid img-circle" alt="avatar" height="300" width="300">
                             </#if>
                             <h3>${name}</h3>
+
                             <p class="sosmed-author">
                             </p>
+
                         </div>
+
                     </div>
+
                 </div>
             </div>
+
             <div class="col-lg-8 col-md-8 col-xs-12">
                 <div class="panel">
                     <div class="panel-body">
                         <ul id="myTab" class="nav nav-pills">
                             <!--  эти li надо будет переделать тебе на кнопки как хочешь.Класс ток поставь.в листе такие требования были, а в фтл херня какая то-->
-<#--                            <li class="active"><a href="#detail" data-toggle="tab">О пользователе</a></li>-->
-                            <button type="button" class="from__button"><a  href="/homework">Домашнее задание</a></button>
-                            <button type="button" class="from__button"><a href="#detail" data-toggle="tab">Сообщение</a></button>
-                            <button type="button" class="from__button"><a href="/logout">Выйти</a></button>
-                            <form name="uploadPhoto" class="form-check-inline inputPhotoSize noPadding"
-                                  action="/photo"
-                                  method="post"
-                                  enctype='multipart/form-data'>
-                                <p><input class="inputPhotoBtn" type="file" name="photo" accept="image/*">
-                                    <input class="inputPhotoBtn" type="submit" value="Отправить"></p>
-                            </form>
-
-
+                            <!--                        <#&#45;&#45;                            <li class="active"><a href="#detail" data-toggle="tab">О пользователе</a></li>&ndash;&gt;-->
+                            <!--                        <button type="button" class="from__button"><a  href="/homework">Домашнее задание</a></button>-->
+                            <!--                        <button type="button"  class="from__button"><a href="/hwCreate">Добавить дз</a></button>-->
+                            <!--                        <button type="button"  class="from__button"><a href="#detail" data-toggle="tab">Сообщение</a></button>-->
+                            <!--                        <button type="button"  class="from__button"><a href="/logout">Выйти</a></button>-->
 
                         </ul>
                         <div id="myTabContent" class="tab-content">
@@ -71,6 +63,13 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <form name="uploadPhoto" class="form-check-inline inputPhotoSize noPadding"
+                                  action="/photo"
+                                  method="post"
+                                  enctype='multipart/form-data'>
+                                <p><input class="button3" type="file" name="photo" accept="image/*"><br>
+                                    <input class="button2" type="submit" value="Отправить"></p>
+                            </form>
                             <div class="tab-pane fade" id="contact">
                                 <p></p>
                             </div>
@@ -83,5 +82,6 @@
 
 </div><!-- /.main -->
 </div><!-- /.container -->
+</html>
 </#macro>
 <@main title="Profile"/>

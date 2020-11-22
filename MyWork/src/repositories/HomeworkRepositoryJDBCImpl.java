@@ -1,6 +1,7 @@
 package repositories;
 
 import models.Homework;
+import singletones.ConnectionProvider;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,6 +10,14 @@ import java.util.Optional;
 
 public class HomeworkRepositoryJDBCImpl implements HomeworkRepository {
     private Connection connection;
+
+    public HomeworkRepositoryJDBCImpl()  {
+        try {
+            connection = ConnectionProvider.getConnection();
+        } catch (ClassNotFoundException e) {
+            throw  new IllegalStateException(e);
+        }
+    }
 
     //language=SQL
     private static final String SQL_SELECT_BY_ID = "SELECT  * from all_hw WHERE hw_id=?";

@@ -8,295 +8,38 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="assets/css/modal.css">
     <link rel="stylesheet" href="modal.css">
-    <script src="modal.js"></script>
-    <title>Home page</title>
+    <title>Homework page</title>
 </head>
-<style>
-    body{    margin: 0px;
-        background:
-                #333333;
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url : "/getHw",
+            type : "GET",
+            async : false,
+            success : function(data) {
+                let rootEl = document.getElementById("list");
+                let postList = data.split('!');
+                postList.forEach(function(item, i, arr) {
+                    let postItem = item.split('#')
+                    if(postItem.length > 1) {
+                        let el = document.createElement("div")
+                        el.innerHTML =  '<div class="card mb-4"> ' +
+                            '<img class="card-img-top" ' +
+                            'src="..'+ postItem[2] +'" ' +
+                            'alt="Card image cap"> <div class="card-body"> ' +
+                            '<h2 class="card-title">'+ postItem[0] +'</h2> ' +
+                            '<p class="card-text">'+ postItem[1] +'</p> ' +
+                            '</div> <div class="card-footer text-muted"> Posted by <a href="/user?user_id='+ postItem[3] + '">'+ postItem[4] +'</a> </div> </div>'
+                        rootEl.appendChild(el);
+                    }
+                });
+            }
+        });
+    })
+</script>
+<div>
+    <ul id="list" class="list-group listSize">
 
-    }
-
-    /* Form Style */
-    .form-horizontal{
-        background: #fff;
-        padding-bottom: 40px;
-        border-radius: 15px;
-        text-align: center;
-    }
-    .form-horizontal .heading{
-        display: block;
-        font-size: 35px;
-        font-weight: 700;
-        padding: 35px 0;
-        border-bottom: 1px solid #f0f0f0;
-        margin-bottom: 30px;
-    }
-    .form-horizontal .form-group{
-        padding: 0 40px;
-        margin: 0 0 25px 0;
-        position: relative;
-    }
-    .form-horizontal .form-control{
-        background: #f0f0f0;
-        border: none;
-        border-radius: 20px;
-        box-shadow: none;
-        padding: 0 20px 0 45px;
-        height: 40px;
-        transition: all 0.3s ease 0s;
-    }
-    .form-horizontal .form-control:focus{
-        background: #e0e0e0;
-        box-shadow: none;
-        outline: 0 none;
-    }
-    .form-horizontal .form-group i{
-        position: absolute;
-        top: 12px;
-        left: 60px;
-        font-size: 17px;
-        color: #c8c8c8;
-        transition : all 0.5s ease 0s;
-    }
-    .form-horizontal .form-control:focus + i{
-        color: #00b4ef;
-    }
-    .form-horizontal .fa-question-circle{
-        display: inline-block;
-        position: absolute;
-        top: 12px;
-        right: 60px;
-        font-size: 20px;
-        color: white;
-        transition: all 0.5s ease 0s;
-    }
-    .form-horizontal .fa-question-circle:hover{
-        color: #000;
-    }
-    .form-horizontal .main-checkbox{
-        float: left;
-        width: 20px;
-        height: 20px;
-        background: #11a3fc;
-        border-radius: 50%;
-        position: relative;
-        margin: 5px 0 0 5px;
-        border: 1px solid #11a3fc;
-    }
-    .form-horizontal .main-checkbox label{
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        cursor: pointer;
-    }
-    .form-horizontal .main-checkbox label:after{
-        content: "";
-        width: 10px;
-        height: 5px;
-        position: absolute;
-        top: 5px;
-        left: 4px;
-        border: 3px solid #fff;
-        border-top: none;
-        border-right: none;
-        background: transparent;
-        opacity: 0;
-        -webkit-transform: rotate(-45deg);
-        transform: rotate(-45deg);
-    }
-    .form-horizontal .main-checkbox input[type=checkbox]{
-        visibility: hidden;
-    }
-    .form-horizontal .main-checkbox input[type=checkbox]:checked + label:after{
-        opacity: 1;
-    }
-    .form-horizontal .text{
-        float: left;
-        margin-left: 7px;
-        line-height: 20px;
-        padding-top: 5px;
-        text-transform: capitalize;
-    }
-    .form-horizontal .btn{
-        float: right;
-        font-size: 14px;
-        color: #fff;
-        background: #00b4ef;
-        border-radius: 30px;
-        padding: 10px 25px;
-        border: none;
-        text-transform: capitalize;
-        transition: all 0.5s ease 0s;
-    }
-    @media only screen and (max-width: 479px){
-        .form-horizontal .form-group{
-            padding: 0 25px;
-        }
-        .form-horizontal .form-group i{
-            left: 45px;
-        }
-        .form-horizontal .btn{
-            padding: 10px 20px;
-        }
-    }
-
-    .navbar-dark {
-        /*background: #000;*/
-        background:#333333;;
-        transition: background-color .15s linear;
-    }
-    .fixed-top {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-    }
-    .navbar {
-        position: relative;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.8333333333rem 3rem;
-    }
-    .reg{
-        float: bottom;
-        font-size: 14px;
-        color: #fff;
-        background: #00b4ef;
-        border-radius: 30px;
-        padding: 10px 25px;
-        border: none;
-        text-transform: capitalize;
-        transition: all 0.5s ease 0s;
-    }
-    .post{
-        align-items: center;
-        max-height: 30px;
-        max-width: 500px;
-        position: relative;
-    }
-    .article{
-        text-align: center;
-        color: whitesmoke;
-        size: 25px;
-        border-radius: 10px;
-        border: 1px solid greenyellow;
-        font-family: Georgia, SansSerif, sans-serif;
-
-    }
-    .list-group{
-        padding-left: 200px;
-        align-items: center;
-    }
-    .work{
-        text-align: center;
-        color: whitesmoke;
-        position: relative;
-        padding-left: 100px;
-    }
-    .topp{
-        padding-left: 600px;
-    }
-</style>
-<#--<nav class="navbar navbar-expand-lg navbar-light bg-header">-->
-<#--    <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<div class="container">
-    <div class="row">
-        <div class = "top_menu">
-            <div class="topp">
-                <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active ">
-                            <a name="element" class="nav-link font-italic" href="/profile"> Profile <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item active ">
-                            <a name="element" class="nav-link font-italic" href="/home"> Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item active">
-                            <a name="element" class="nav-link font-italic" href="/homework">Homework <span
-                                        class="sr-only">(current)</span></a>
-                        </li>
-
-                        <#--            //TODO(ссылки поменяй)-->
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
-
-<#--    </div>-->
-<#--</nav>-->
-<div class="col-md-10 blogShort">
-    <div class="work">
-        <h2>HOMEWORK</h2><br><br>
-    </div>
-    <div>
-        <ul id="list" class="list-group listSize">
-            <div class="post">
-
-                <img src="../../images/1.jpg" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail">
-                <p></p>
-                <article class="article"><p>
-                        простите
-                    </p></article>
-                <button id="show-modal" class="btn">Открыть</button>
-
-                <script src="modal.js"></script>
-                <script>
-                    (function () {
-                        // создаём модальное окно
-                        var modal = $modal();
-                        // при клике по кнопке #show-modal
-                        document.querySelector('#show-modal').addEventListener('click', function () {
-                            // отобразим модальное окно
-                            modal.show();
-                        });
-                    })();
-                </script>
-                <br>
-                <div class="post">
-                    <img src="../../images/1.jpg" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail">
-                    <p></p>
-                    <article class="article"><p>
-                            я не успела
-                        </p></article><br>
-                    <div class="post">
-                        <img src="../../images/1.jpg" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail">
-                        <p></p>
-                        <article class="article"><p>
-                                сделать отображние
-                            </p></article><br>
-                        <div class="post">
-                            <img src="../../images/1.jpg" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail">
-                            <p></p>
-                            <article class="article"><p>
-                                    примите как есть
-                                </p></article><br>
-                            <div class="post">
-                                <img src="../../images/1.jpg" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail">
-                                <p></p>
-                                <article class="article"><p>
-                                        пожалуйста
-                                    </p></article><br>
-                                <div class="post">
-                                    <img src="../../images/1.jpg" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail">
-                                    <p></p>
-                                    <article class="article"><p>
-                                            :)
-                                        </p></article><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ul>
-    </div>
+    </ul>
 </div>

@@ -7,6 +7,7 @@ import repositories.HomeworkRepositoryJDBCImpl;
 import repositories.TeachersRepositoryJDBCImpl;
 import repositories.UserRepositoryJDBCImpl;
 import services.Helper;
+import services.TeacherService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -24,16 +23,14 @@ import java.util.Optional;
 
 @WebServlet("/hwCreate")
 public class HWCreateServlet extends HttpServlet {
-    private UserRepositoryJDBCImpl usersDao;
     private Helper helper;
-    private TeachersRepositoryJDBCImpl teachersRepositoryJDBC;
-    private HomeworkRepositoryJDBCImpl postDao = new HomeworkRepositoryJDBCImpl();
+    private TeacherService teacherService;
+    private HomeworkRepositoryJDBCImpl homeworkRepositoryJDBC = new HomeworkRepositoryJDBCImpl();
 
     @Override
     public void init() throws ServletException {
-       usersDao = new UserRepositoryJDBCImpl();
         helper = new Helper();
-        teachersRepositoryJDBC = new TeachersRepositoryJDBCImpl();
+        teacherService = new TeacherService();
     }
 
     @Override
@@ -45,7 +42,7 @@ public class HWCreateServlet extends HttpServlet {
         if(session.getAttribute("user") != null){
             Map<String, Object> root = new HashMap<>();
             root.put("isLogged",true);
-            helper.render(req,resp,"hw_create.ftl",root);
+            helper.render(req,resp,"hw_create2.ftl",root);
         }else{
             resp.sendRedirect("/home");
         }
@@ -58,21 +55,23 @@ public class HWCreateServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
         User userSession = (User)session.getAttribute("user");
-        long author = userSession.getId();
+        Optional <Teacher> teacher = teacherService.findByUserOd(userSession.getId());
         Homework homework = new Homework();
-            String subject = req.getParameter("subject");
+        if(teacher.isPresent()){
+            homework.setSubject(teacher.get().getSubject());
+            homework.setGroup_number(teacher.get().getGroups());
+        }else {
+            throw new IllegalStateException();
+        }
             String text = req.getParameter("text");
             String deadine = req.getParameter("deadline");
-            String group = req.getParameter("group");
             homework.setDeadline(deadine);
             homework.setHw_text(text);
-            homework.setSubject(subject);
-            homework.setGroup_number(Integer.valueOf(group));
             homework.setMake(false);
-        postDao.save(homework);
+        homeworkRepositoryJDBC.save(homework);
 
         session.setAttribute("user",userSession);
-            resp.sendRedirect("/homework");
+            resp.sendRedirect("/profile");
 
     }
 }

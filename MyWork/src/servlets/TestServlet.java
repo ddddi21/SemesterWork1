@@ -19,7 +19,7 @@ public class TestServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         Map<String, Object> root = new HashMap<>();
-        helper.render(req, resp, "pro.ftl", root);
+        helper.render(req, resp, "blog.ftl", root);
     }
 
     @Override

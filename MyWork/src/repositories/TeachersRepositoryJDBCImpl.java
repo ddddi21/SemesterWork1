@@ -31,6 +31,8 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
     private static final String SQL_UPDATE =
             "UPDATE teacher SET user_id = ?, subject = ?, group_number = ? WHERE  teacher_id = ?";
 
+    //language=SQL
+    private static final String SQL_FIND_BY_USER_ID = "SELECT * from teacher WHERE user_id = ?";
 
     //TODO(do this later)
 
@@ -90,6 +92,24 @@ public class TeachersRepositoryJDBCImpl implements TeachersRepository {
         }
         return users;
     }
+
+    @Override
+    public Optional findByUserId(Long id) {
+        if(id<0) return Optional.empty();
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USER_ID);
+            statement.setLong(1, id);
+            try(ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return Optional.of(teacherRowMapper.mapRow(resultSet));
+                }
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
 
     @Override
     public Optional<Teacher> findById(Long id) {
