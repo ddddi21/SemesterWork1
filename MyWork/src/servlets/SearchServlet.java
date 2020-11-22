@@ -14,7 +14,7 @@ import java.util.List;
 
 @WebServlet("/ajax_search")
 public class SearchServlet extends HttpServlet {
-    UserService us = new UserService();
+    UserService userService = new UserService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -26,11 +26,11 @@ public class SearchServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
         String search = req.getParameter("search");
-        List<User> userList = us.getAllUsersLikeString(search);
-        StringBuilder answer = new StringBuilder();
+        List<User> userList = userService.getAllUsersLikeString(search);
+        StringBuilder stringBuilder = new StringBuilder();
         for(User user:userList){
-            answer.append(user.getFirstName()).append("#").append(user.getId()).append(';');
+            stringBuilder.append(user.getFirstName()).append("#").append(user.getLastName()).append("#").append(user.getRole()).append("#").append(user.getId()).append('!');
         }
-        writer.println(answer);
+        writer.println(stringBuilder);
     }
 }
