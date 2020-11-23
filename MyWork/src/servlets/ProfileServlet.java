@@ -31,6 +31,7 @@ public class ProfileServlet extends HttpServlet {
         if (user != null) {
             root.put("isCanComeIn", true);
             resp.setContentType("text/html");
+            root.put("owner",true);
             root.put("name", user.getFirstName());
             root.put("email", user.getEmail());
             root.put("role", user.getRole());
@@ -46,7 +47,7 @@ public class ProfileServlet extends HttpServlet {
                     resp.sendRedirect("/home");
                 }
             }
-        }
+        }else resp.sendRedirect("/home");
     }
 
     @Override

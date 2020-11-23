@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/profilStyle.css">
     <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -33,7 +32,7 @@
                                     if (itemMas.length > 1) {
                                         let el = document.createElement("div");
                                         el.innerHTML =
-                                            "<div class=\"search_result\"><table><tr><td class=\"search_result-name\"><a href=\"/user?user_id="+ itemMas[4] + "\">" + itemMas[0] + itemMas[1] + '<p>' + itemMas[3]+'</p>'+ "</a></td><td class=\"search_result-btn\"><a href=\"#\">Перейти</a></td> </tr> </table> </div>"
+                                            "<div class=\"search_result\"><table><tr><td class=\"search_result-name\">" + itemMas[0] + ' ' + itemMas[1] + '<p>' + itemMas[2]+'</p>'+ "</a></td><td class=\"search_result-btn\"><a href=\"/user?user_id="+ itemMas[3] + "\">Перейти</a></td> </tr> </table> </div>"
                                         rootEl.appendChild(el);
                                     }
                                 });
@@ -50,6 +49,7 @@
                 }
             });
         })
+
     </script>
 </head>
 <#--<#if isLogged>-->

@@ -118,14 +118,16 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/home">Главная страница<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/profile">Профиль<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/homework">Просмотр д\з<span class="sr-only">(current)</span></a>
                 </li>
+                <#if role=="teacher">
+                <li class="nav-item">
+                    <a class="nav-link" href="/hwCreate">Добавить д\з<span class="sr-only">(current)</span></a>
+                </li>
+                </#if>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Выйти<span class="sr-only">(current)</span></a>
                 </li>

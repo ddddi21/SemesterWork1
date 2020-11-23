@@ -1,5 +1,6 @@
 package servlets;
 
+import models.User;
 import services.Helper;
 
 import javax.servlet.ServletException;
@@ -23,10 +24,12 @@ public class HomeworkServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
+        User userSession = (User)session.getAttribute("user");
 
         if(session.getAttribute("user") != null){
             Map<String, Object> root = new HashMap<>();
             root.put("isLogged",true);
+            root.put("role",userSession.getRole());
             helper.render(req,resp,"homework.ftl",root);
         }else{
             Map<String, Object> root = new HashMap<>();

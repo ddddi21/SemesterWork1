@@ -31,5 +31,10 @@
 <#--            <input name="group" type="number" class="form-control" aria-label="Default"-->
 <#--                   aria-describedby="inputGroup-sizing-default">    </div><br>-->
         <button type="submit" class="from__button">Создать</button>
+        <p>
+            <a href="http://localhost:8080/profile">
+                <button type="button" class="from__button">Назад</button>
+            </a>
+        </p>
     </form>
 </div>

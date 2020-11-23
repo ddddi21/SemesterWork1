@@ -32,12 +32,15 @@ public class UserServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
+        User userSession = (User)session.getAttribute("user");
         String userId = req.getParameter("user_id");
         Optional<User> userById = userService.findUserById(Long.valueOf(userId));
         if(userById.isPresent()){
             User user = userById.get();
             Map<String, Object> root = new HashMap<>();
-            root.put("pageOverlord",false);
+            if(userId.equals(userSession.getId().toString())){
+                root.put("owner",true);
+            }else  root.put("owner",false);
             root.put("name", user.getFirstName());
             root.put("email", user.getEmail());
             root.put("role", user.getRole());

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 //TODO(add when i make a new servlets)
-@WebFilter(urlPatterns = {"/registration","/studentRegistration", "/teacherRegistration", "/home"}, filterName = "AuthFilter")
+@WebFilter(urlPatterns = {"/registration","/studentRegistration", "/teacherRegistration", "/home", "/editUser", "/getHw", "/homework","/hwCreate","/login","/logout","/profile","/ajax_search","/photo","/user"}, filterName = "AuthFilter")
 public class AuthFilter implements Filter {
     private UserService userService = new UserService();
     @Override

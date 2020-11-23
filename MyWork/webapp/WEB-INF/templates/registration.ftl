@@ -29,22 +29,27 @@
     <p margin-top: 20%><input name="role" type="radio" value="teacher"> Преподаватель</p>
     <div class="form__group">
         <p margin-top: 20%>
-            <input class="form__input" type="email" name="email" placeholder="enter email"/>
+            <input class="form__input" type="email" name="email" placeholder="Введите почту"/>
         </p>
     </div>
     <div class="form__group">
-        <input class="form__input" type="password" name="password" placeholder="enter password"/>
+        <input class="form__input" type="password" name="password" placeholder="Введите пароль"/>
     </div>
     <div class="form__group">
-        <input class="form__input" type="text" name="first_name" placeholder="enter first_name"/>
+        <input class="form__input" type="text" name="first_name" placeholder="Введите имя"/>
     </div>
     <div class="form__group">
-        <input class="form__input" type="text" name="last_name" placeholder="enter last_name"/>
+        <input class="form__input" type="text" name="last_name" placeholder="Введите фамилию"/>
     </div>
     <div class="form__group">
-        <input class="form__input" type="number" name="age" placeholder="enter age"/>
+        <input class="form__input" type="number" name="age" placeholder="Введите возраст"/>
     </div>
     <input type="submit" class="from__button" value="Зарегистрироваться">
+    <p margin-top: 20%>
+        <a href="http://localhost:8080/home">
+            <button type="button" class="from__button">Назад</button>
+        </a>
+    </p>
 </form>
 
 </body>
