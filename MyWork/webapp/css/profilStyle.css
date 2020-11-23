@@ -106,3 +106,22 @@
     margin: 4px 2px;
     cursor: pointer;
 }
+btn {
+    display: inline-block;
+    vertical-align: top;
+    padding: 8px 30px;
+    background-color: #a74949;
+    border: 3px solid #070707;
+    font-size: 14px;
+    font-weight: 700;
+    color: #030303;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    transition: background .1s linear, color .1s linear;
+}
+
+.btn:hover {
+    background-color: #fff;
+    color: #333;
+}

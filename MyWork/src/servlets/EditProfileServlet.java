@@ -5,6 +5,7 @@ import services.Helper;
 import services.UserService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import models.User;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@WebServlet("/editUser")
 public class EditProfileServlet extends HttpServlet {
     UserRepositoryJDBCImpl userRepositoryJDBC;
     Helper helper;

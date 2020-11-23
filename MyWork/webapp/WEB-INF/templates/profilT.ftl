@@ -56,6 +56,7 @@
                             <hr>
                             <div class="tab-pane fade active in" id="detail">
                                 <h4>Профиль</h4>
+                                <button type="button" class="btn"><a href="/editUser">Редактировать</a></button>
                                 <table class="table table-th-block">
                                     <tbody>
                                     <tr><td class="active"><p>Your age:</p></td><td>${age}</td></tr>

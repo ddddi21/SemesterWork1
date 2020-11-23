@@ -147,7 +147,7 @@ public class HomeworkRepositoryJDBCImpl implements HomeworkRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_BY_GROUP)){
             preparedStatement.setInt(1,group);
             try(ResultSet resultSet = preparedStatement.executeQuery()){
-                if(resultSet.next()){
+                while(resultSet.next()){
                     homework = homeworkRowMapper.mapRow(resultSet);
                     list.add(homework);
                 }

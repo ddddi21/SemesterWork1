@@ -19,7 +19,7 @@
                                 if (itemMas.length > 1) {
                                     let el = document.createElement("div");
                                     el.innerHTML =
-                                        "<div class=\"search_result\"><table><tr><td class=\"search_result-name\"><a href=\"/user?user_id="+ itemMas[4] + "\">" + itemMas[0] + itemMas[1] + '<p>' + itemMas[3]+'</p>'+ "</a></td><td class=\"search_result-btn\"><a href=\"#\">Перейти</a></td> </tr> </table> </div>"
+                                        "<div class=\"search_result\"><table><tr><td class=\"search_result-name\"><a href=\"/user?user_id="+ itemMas[3] + "\">" + itemMas[0] + ' ' + itemMas[1] + '<p>' + itemMas[2]+'</p>'+ "</a></td><td class=\"search_result-btn\"></td> </tr> </table> </div>"
                                     rootEl.appendChild(el);
                                 }
                             });

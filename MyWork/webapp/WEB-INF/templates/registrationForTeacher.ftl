@@ -35,8 +35,6 @@
   <option value="912">912</option>
   <option value="913">913</option>
  </select>
-  <input class="form__button" type="submit"></p> <br>
-
    <p>Выберте предмет</p>
     <p><select multiple size="4" name="select_subject">
             <option value="Maths">Математика</option>
@@ -44,10 +42,9 @@
            <option value="IT">IT</option>
            <option value="Geography">География</option>
         </select>
-       <input class="form__button" type="submit"></p>
 
  <p align="center">
-  <button class="from__button">Вход</button>
+  <button class="from__button" type="submit">Вход</button>
  </p>
 </form>
 </body>

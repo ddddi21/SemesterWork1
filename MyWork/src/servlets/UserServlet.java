@@ -38,7 +38,6 @@ public class UserServlet extends HttpServlet {
             User user = userById.get();
             Map<String, Object> root = new HashMap<>();
             root.put("pageOverlord",false);
-            root.put("email",user.getEmail());
             root.put("name", user.getFirstName());
             root.put("email", user.getEmail());
             root.put("role", user.getRole());
