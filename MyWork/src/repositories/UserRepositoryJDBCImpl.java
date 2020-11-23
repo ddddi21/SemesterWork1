@@ -33,7 +33,7 @@ public class UserRepositoryJDBCImpl implements UserRepository {
     private static final String SQL_UPDATE =
             "UPDATE all_user SET first_name = ?, last_name = ?, age = ?, role = ?, email = ?, password = ?, imagepath =? WHERE  user_id = ?";
 
-    private static final String SQL_FIND_ALL_USERS_LIKE="select * from users where username like ?";
+    private static final String SQL_FIND_ALL_USERS_LIKE="select * from all_user where first_name like ?";
 
 
 

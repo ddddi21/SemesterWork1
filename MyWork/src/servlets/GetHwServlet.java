@@ -32,13 +32,6 @@ public class GetHwServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
-        if(session.getAttribute("user") != null){
-            Map<String, Object> root = new HashMap<>();
-            root.put("isLogged",true);
-            helper.render(req,resp,"hw_create2.ftl",root);
-        }else{
-            resp.sendRedirect("/home");
-        }
         User user = (User)session.getAttribute("user");
         Integer group=0;
         if(user.getRole().equals("teacher")) {
