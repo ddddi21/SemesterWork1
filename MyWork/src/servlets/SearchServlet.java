@@ -14,10 +14,11 @@ import java.util.List;
 
 @WebServlet("/ajax_search")
 public class SearchServlet extends HttpServlet {
-    UserService userService = new UserService();
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    UserService userService;
 
+    @Override
+    public void init() throws ServletException {
+        userService = new UserService();
     }
 
     @Override

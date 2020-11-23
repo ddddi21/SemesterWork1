@@ -235,8 +235,10 @@ public class UserRepositoryJDBCImpl implements UserRepository {
         Integer age = row.getObject("age", Integer.class);
         String email = row.getString("email");
         String password = row.getString("password");
+        String imagePath = row.getString("imagepath");
+
         //создаём и возвращаем объект User из полученных данных
-        return new User(id,firstName,lastName,role,age,email,password);
+        return new User(id,firstName,lastName,role,age,email,password, imagePath);
     };
 
 }

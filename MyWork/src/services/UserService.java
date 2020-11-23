@@ -71,7 +71,7 @@ public class UserService {
         Optional<User> checkUser = userRepositoryJDBC.findByEmail(username);
         if(checkUser.isPresent()){
             User checked = checkUser.get();
-            return BCrypt.checkpw(password,checked.getPassword());
+            return BCrypt.  checkpw(password,checked.getPassword());
         }
         else return false;
     }
